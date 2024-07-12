@@ -8,30 +8,35 @@
 import SwiftUI
 import ComposableArchitecture
 struct ContentView: View {
-    let store:StoreOf<Feature>
+    @Perception.Bindable var store = Store(initialState: Feature.State(count: 0)) {
+      Feature()
+    }
     var body: some View {
-        WithViewStore(store) { viewStore in
+        WithPerceptionTracking {
             VStack {
-                Text("Number="+String(describing:viewStore.count))
+                Text("Number="+String(describing:store.count))
                 Button {
-                    viewStore.send(.increment)
+                    store.send(.increment)
                 } label: {
                     Text("Increment Number")
                 }
                 Button {
-                    viewStore.send(.decrement)
+                    store.send(.decrement)
                 } label: {
                     Text("Decrement Number")
                 }
-            }
+            }.onAppear(perform: {
+                store.send(.increment)
+            })
             .padding()
         }
+           
 
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(store: .init(initialState: Feature.State(count: 0), reducer: Feature()))
+        ContentView()
     }
 }

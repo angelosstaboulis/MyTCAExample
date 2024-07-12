@@ -11,7 +11,7 @@ import SwiftUI
 struct MyTCAExampleApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(store: .init(initialState: Feature.State(count: 0), reducer: Feature()))
+            ContentView()
         }
     }
 }

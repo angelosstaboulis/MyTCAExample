@@ -7,7 +7,8 @@
 
 import Foundation
 import ComposableArchitecture
-struct Feature:ReducerProtocol{
+struct Feature:Reducer{
+    @ObservableState
     struct State:Equatable{
         var count:Int
     }
@@ -15,7 +16,7 @@ struct Feature:ReducerProtocol{
         case increment
         case decrement
     }
-    func reduce(into state: inout State, action: Action) -> EffectTask<Action> {
+    func reduce(into state: inout State, action: Action) -> Effect<Action> {
         switch action{
         case .increment:
             state.count = state.count + 1
